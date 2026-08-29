@@ -4,6 +4,7 @@ from enum import StrEnum
 class RobotFamily(StrEnum):
     ALL = "all"
     M700 = "M700"
+    Q7 = "Q7"
 
     @staticmethod
     def from_string(text: str | None):

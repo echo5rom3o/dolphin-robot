@@ -271,7 +271,7 @@ ENTITY_DESCRIPTIONS: list[MyDolphinPlusEntityDescription] = [
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
-        supported_robot=RobotFamily.M700,
+        supported_robot=RobotFamily.ALL,
         translation_key=slugify(DYNAMIC_DESCRIPTION_TEMPERATURE),
     ),
 ]
