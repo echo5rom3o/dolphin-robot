@@ -489,7 +489,7 @@ class MyDolphinPlusCoordinator(DataUpdateCoordinator):
         return result
 
     def _get_temperature_data(self, _entity_description) -> dict | None:
-        dynamic = self.aws_data.get(DATA_SECTION_DYNAMIC) or {}
+        dynamic = (self.aws_data or {}).get(DATA_SECTION_DYNAMIC) or {}
         iot_response = dynamic.get(DYNAMIC_TYPE_IOT_RESPONSE) or {}
         temperature_int = iot_response.get(DYNAMIC_DESCRIPTION_TEMPERATURE)
 
