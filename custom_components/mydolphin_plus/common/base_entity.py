@@ -123,6 +123,10 @@ class MyDolphinPlusBaseEntity(CoordinatorEntity):
         try:
             new_data = self._local_coordinator.get_data(self.entity_description)
 
+            if new_data is None:
+                # The coordinator already logged why; keep the last good state.
+                return
+
             if self._data != new_data:
                 data_for_log = {
                     key: new_data[key] for key in new_data if key != ATTR_ACTIONS

@@ -489,9 +489,14 @@ class MyDolphinPlusCoordinator(DataUpdateCoordinator):
         return result
 
     def _get_temperature_data(self, _entity_description) -> dict | None:
-        dynamic = self.aws_data.get(DATA_SECTION_DYNAMIC, {})
-        iot_response = dynamic.get(DYNAMIC_TYPE_IOT_RESPONSE, {})
-        temperature_int = iot_response.get(DYNAMIC_DESCRIPTION_TEMPERATURE, 0)
+        dynamic = self.aws_data.get(DATA_SECTION_DYNAMIC) or {}
+        iot_response = dynamic.get(DYNAMIC_TYPE_IOT_RESPONSE) or {}
+        temperature_int = iot_response.get(DYNAMIC_DESCRIPTION_TEMPERATURE)
+
+        # The cloud reports no temperature while the robot is out of the water or
+        # powered down; the sensor is simply unknown then, not an error.
+        if temperature_int is None:
+            return {ATTR_STATE: None}
 
         state_str = str(temperature_int)
         state_str_fixed = f"{state_str[:2]}.{state_str[2:].ljust(2, '0')}"
